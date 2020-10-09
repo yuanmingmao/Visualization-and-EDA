@@ -1,0 +1,84 @@
+---
+title: "Data Import"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(readxl)
+library(haven)
+```
+
+## Read in some data
+
+Read in the litters dataset.
+
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+
+
+## Take a look at the data
+
+Printing in the console.
+
+```{r}
+litters_df
+```
+
+```{r}
+head(litters_df)
+tail(litters_df)
+```
+
+```{r}
+skimr::skim(litters_df)
+```
+
+## Options to read_csv
+
+Check out `?read_csv()` for more information
+
+```{r eval = FALSE}
+litters_df = read_csv("./data/FAS_litters.csv", skip = 10, col_names = FALSE)
+litters_df = read_csv("./data/FAS_litters.csv", na = c("", "NA", "999", "."))
+```
+
+## Other file formats
+
+Read in an excel file.
+
+```{r}
+mlb_df = read_excel("./data/mlb11.xlsx", range = "A1:F7")
+mlb_df
+```
+
+Read in a SAS file.
+
+```{r}
+palse_df = read_sas("./data/public_pulse_data.sas7bdat")
+palse_df
+```
+
+## Comparison with Base R
+
+What about `read.csv` ...?
+
+```{r}
+litters_base = read.csv("./data/FAS_litters.csv")
+litters_readr = read_csv("./data/FAS_litters.csv")
+
+litters_base
+litters_readr
+```
+
+## Exporting data
+
+Export the mil sub-table.
+
+```{r}
+write_csv(mlb_df,"./data/mlb_subtable.csv")
+```
+
+
